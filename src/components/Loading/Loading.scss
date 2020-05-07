@@ -1,0 +1,24 @@
+.Loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  flex-grow: 1;
+  flex-direction: column;
+
+  .Loading-logo {
+    animation: Loading-logo-spin infinite 20s linear;
+    height: 40vmin;
+    pointer-events: none;
+    color: #fff;
+  }
+
+  @keyframes Loading-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
