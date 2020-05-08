@@ -1,0 +1,41 @@
+.AccountsTable {
+  display: flex;
+
+  .Account-Actions {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .Title {
+      h1 {
+        margin: 0;
+      }
+    }
+
+    .Account-Search {
+
+    }
+
+  }
+
+  .MoreInfoBtn {
+    border: none;
+    line-height: 1;
+    border-radius: 50%;
+    background: #4caf50;
+    height: 35px;
+    display: flex;
+    width: 35px;
+    box-shadow: 0px 0px 5px 1px #00000026;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      color: #ffffffa6;
+      font-size: 20px;
+    }
+  }
+
+
+}

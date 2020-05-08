@@ -9,9 +9,11 @@
 /* #### containers #### */
 @import './containers/Header/Header';
 @import './containers/Footer/Footer';
+@import './containers/AccountsTable/AccountsTable';
 
 /* #### components #### */
 @import './components/Loading/Loading';
+
 
 * {
   box-sizing: border-box;

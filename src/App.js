@@ -5,8 +5,6 @@ import * as actions from "./redux/actions";
 import routes from "./routes";
 import { Switch, Redirect, Route } from "react-router-dom";
 
-import Header from "./containers/Header/Header";
-import Footer from "./containers/Footer/Footer";
 
 class App extends Component {
   constructor(){
@@ -15,7 +13,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
+
   }
 
   render() {
@@ -38,7 +36,6 @@ class App extends Component {
           }
           </Switch>
         </div>
-        <Footer />
       </div>
     );
   }
