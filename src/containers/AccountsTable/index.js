@@ -20,9 +20,12 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 import * as moment from 'moment';
-
 
 
 function descendingComparator(a, b, orderBy) {
@@ -126,7 +129,8 @@ const useStyles = makeStyles((theme) => ({
     width: 1,
   },
   tableContainer: {
-    maxHeight: "680px"
+    maxHeight: '76vh',
+    minHeight: '76vh'
   },
   hideCopy: {
     whiteSpace: 'nowrap',
@@ -173,6 +177,13 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectInput: {
+    padding: '8.5px 14px'
+  }
 }));
 
 export default function AccountsTable({ allUsers }) {
@@ -180,9 +191,12 @@ export default function AccountsTable({ allUsers }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('business_name');
   const [selected, setSelected] = React.useState([]);
+
   const [search, setSearch] = React.useState('');
+  const [searchAccounts, setSearchAccounts] = React.useState([]);
+  const [selectColumn, setSelectColumn] = React.useState('');
+
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   // const [userAccounts, setuserAccounts] = React.useState();
   const userAccounts = useSelector(state => state.userAccounts);
@@ -191,13 +205,18 @@ export default function AccountsTable({ allUsers }) {
     const results = userAccounts.filter(person =>
       person.email.toLowerCase().includes(search)
     );
-    // console.log(results);
-    // setuserAccounts(results);
+    console.log(results);
+    setSearchAccounts(results);
   }, [search]);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
+    console.log(search);
   };
+
+  const handleColumnSelect = (event) => {
+    setSelectColumn(event.target.value);
+  }
 
   const handleMoreInfo = () => {
 
@@ -219,22 +238,30 @@ export default function AccountsTable({ allUsers }) {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
   const isSelected = (name) => selected.indexOf(name) !== -1;
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, userAccounts.length - page * rowsPerPage);
-  // console.log(emptyRows);
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <TableContainer className={classes.tableContainer}>
           <div className="Account-Actions">
             <section className="Title">
               <h1>levAR Accounts</h1>
             </section>
             <section className="Account-Search">
+              <div>
+                <Select
+                  id="user-account-select"
+                  variant='outlined'
+                  autoWidth
+                  value={selectColumn}
+                  onChange={handleColumnSelect}
+                >
+                  <MenuItem value='business_name'>Business Name</MenuItem>
+                  <MenuItem value='email'>Email</MenuItem>
+                  <MenuItem value='website_url'>Website</MenuItem>
+                  <MenuItem value='created_at'>Created</MenuItem>
+                </Select>
+              </div>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
@@ -252,10 +279,10 @@ export default function AccountsTable({ allUsers }) {
               </div>
             </section>
           </div>
+        <TableContainer className={classes.tableContainer}>
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
             aria-label="enhanced table"
             stickyHeader
             aria-label="sticky table"
@@ -268,16 +295,12 @@ export default function AccountsTable({ allUsers }) {
               rowCount={userAccounts.length}
             />
             <TableBody>
-              {stableSort(userAccounts, getComparator(order, orderBy))
+              {
+                stableSort(search ? searchAccounts : userAccounts, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      tabIndex={-1}
-                      key={row.id}
-                    >
+                    <TableRow tabIndex={-1} key={row.id}>
                       <TableCell align="left">{row.business_name}</TableCell>
                       <TableCell align="left">{row.email}</TableCell>
                       <TableCell className={classes.hideCopy} align="left">{row.website_url}</TableCell>
@@ -292,11 +315,6 @@ export default function AccountsTable({ allUsers }) {
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>

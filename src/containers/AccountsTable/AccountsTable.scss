@@ -1,5 +1,6 @@
 .AccountsTable {
   display: flex;
+  width: 100%;
 
   .Account-Actions {
     padding: 16px;
@@ -14,8 +15,13 @@
       }
     }
 
-    .Account-Search {
+    #user-account-select {
+      padding-right: 32px;
+      padding: 8.5px 14px;
+    }
 
+    .Account-Search {
+      display: flex;
     }
 
   }
