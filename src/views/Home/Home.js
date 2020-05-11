@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
 import AccountsTable from "../../containers/AccountsTable";
 
 
 const Home = () => {
-
+  const userAccounts = useSelector(state => state.userAccounts);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Home = () => {
   return (
     <div className="Home">
       <section className="AccountsTable">
-        <AccountsTable />
+        <AccountsTable allUsers={userAccounts} />
       </section>
     </div>
   )

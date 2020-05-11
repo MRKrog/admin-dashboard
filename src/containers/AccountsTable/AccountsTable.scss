@@ -6,6 +6,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: #f3f3f3;
 
     .Title {
       h1 {
@@ -30,6 +31,7 @@
     box-shadow: 0px 0px 5px 1px #00000026;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 
     i {
       color: #ffffffa6;

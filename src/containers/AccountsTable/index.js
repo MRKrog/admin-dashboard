@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,6 +17,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
 
 import * as moment from 'moment';
 
@@ -99,8 +102,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -124,21 +125,83 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  tableContainer: {
+    maxHeight: "680px"
+  },
+  hideCopy: {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: "250px"
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
 }));
 
-export default function AccountsTable() {
+export default function AccountsTable({ allUsers }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('business_name');
   const [selected, setSelected] = React.useState([]);
+  const [search, setSearch] = React.useState('');
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  // const [userAccounts, setuserAccounts] = React.useState();
   const userAccounts = useSelector(state => state.userAccounts);
+
+   React.useEffect(() => {
+    const results = userAccounts.filter(person =>
+      person.email.toLowerCase().includes(search)
+    );
+    // console.log(results);
+    // setuserAccounts(results);
+  }, [search]);
+
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  };
 
   const handleMoreInfo = () => {
 
-  }
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -151,7 +214,6 @@ export default function AccountsTable() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -160,25 +222,34 @@ export default function AccountsTable() {
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
-
-
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, userAccounts.length - page * rowsPerPage);
-
-console.log(emptyRows);
+  // console.log(emptyRows);
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <TableContainer>
+        <TableContainer className={classes.tableContainer}>
           <div className="Account-Actions">
             <section className="Title">
               <h1>levAR Accounts</h1>
             </section>
             <section className="Account-Search">
-              SearchBar
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  name="search"
+                  onChange={handleSearch}
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </div>
             </section>
           </div>
           <Table
@@ -186,6 +257,8 @@ console.log(emptyRows);
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
             aria-label="enhanced table"
+            stickyHeader
+            aria-label="sticky table"
           >
             <EnhancedTableHead
               classes={classes}
@@ -207,7 +280,7 @@ console.log(emptyRows);
                     >
                       <TableCell align="left">{row.business_name}</TableCell>
                       <TableCell align="left">{row.email}</TableCell>
-                      <TableCell align="left">{row.website_url}</TableCell>
+                      <TableCell className={classes.hideCopy} align="left">{row.website_url}</TableCell>
                       <TableCell align="left">{moment(row.created_at).format("MM-DD-YYYY")}</TableCell>
                       <TableCell align="left">
                         <Tooltip title="More Info">
@@ -259,3 +332,20 @@ console.log(emptyRows);
 // uuid: "9a219350-f35b-4284-9a00-2cceae2bf262"
 // website_url: "https://ecommerce-demo.levar.io"
 // zip: "60654"
+
+
+// handleSearch = event => {
+//   const {data} = this.state
+//   let filteredDatas = []
+//   filteredDatas = data.filter(e => {
+//       let mathesItems = Object.values(e)
+//       let retVal = true;
+//       mathesItems.forEach(e => {
+//           const regex = new RegExp(event.target.value, 'gi')
+//           if (typeof e == 'string')
+//               retVal = e.match(regex)
+//       })
+//       return retVal;
+//   })
+//   this.setState({filterData: filteredDatas, searchValue: event.target.value})
+// }
