@@ -22,7 +22,6 @@ const AccountInfo = (props) => {
 
   return (
     <div>
-      <Button onClick={props.toggleDrawer('accountInfo', true)}>{'accountInfo'}</Button>
       <Drawer anchor={'bottom'} open={props.state['accountInfo']} onClose={props.toggleDrawer('accountInfo', false)}>
         <div
           className={classes.fullList}
@@ -62,4 +61,4 @@ const AccountInfo = (props) => {
   );
 }
 
-export default AccountInfo; 
+export default AccountInfo;

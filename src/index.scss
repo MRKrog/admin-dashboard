@@ -3,12 +3,9 @@
 @import './App';
 
 /* #### views #### */
-@import './views/Home/Home';
-@import './views/About/About';
+@import './views/AdminDashboard/AdminDashboard';
 
 /* #### containers #### */
-@import './containers/Header/Header';
-@import './containers/Footer/Footer';
 @import './containers/AccountsTable/AccountsTable';
 
 /* #### components #### */

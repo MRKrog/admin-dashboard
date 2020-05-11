@@ -1,21 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
 import AccountsTable from "../../containers/AccountsTable";
 import AccountInfo from "../../containers/AccountInfo";
 
-const Home = () => {
-  const [state, setState] = React.useState({
+const AdminDashboard = () => {
+  const [state, setState] = useState({
     accountInfo: false,
   });
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleDrawer = (anchor, open, id, uuid) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
+    console.log('id', id);
+    console.log('uuid', uuid);
     setState({ ...state, [anchor]: open });
   };
 
   return (
-    <div className="Home">
+    <div className="AdminDashboard">
       <section className="AccountsTable">
         <AccountsTable toggleDrawer={toggleDrawer} />
       </section>
@@ -24,4 +26,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default AdminDashboard;
