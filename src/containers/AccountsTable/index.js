@@ -110,7 +110,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: '100%',
-    maxWidth: 800,
     marginBottom: theme.spacing(2),
   },
   table: {
@@ -287,6 +286,7 @@ const AccountsTable = (props) => {
                 stableSort(search ? searchAccounts : userAccounts, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((user, index) => {
+                  console.log('setup_wizard_state' , user.setup_wizard_state);
                   return (
                     <TableRow tabIndex={-1} key={user.id}>
                       <TableCell align="left">{user.business_name}</TableCell>
@@ -295,8 +295,8 @@ const AccountsTable = (props) => {
                       <TableCell align="left">{moment(user.created_at).format("MM-DD-YYYY")}</TableCell>
                       <TableCell align="left">
                         <Tooltip title="More Info">
-                          <button className="MoreInfoBtn" onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
-                            <i className="far fa-plus"></i>
+                          <button className={`MoreInfoBtn stage-${user.setup_wizard_state}`} onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
+                            {user.setup_wizard_state}
                           </button>
                         </Tooltip>
                       </TableCell>
@@ -321,6 +321,8 @@ const AccountsTable = (props) => {
 }
 
 export default AccountsTable;
+
+// <i className="far fa-plus"></i>
 
 // accepts_marketing: null
 // address: "222 West Merchandise Mart Plaza #1212"

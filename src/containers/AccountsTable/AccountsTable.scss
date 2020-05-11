@@ -31,7 +31,7 @@
   border: none;
   line-height: 1;
   border-radius: 50%;
-  background: #4caf50;
+
   height: 35px;
   display: flex;
   width: 35px;
@@ -39,6 +39,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  &.stage-1 { background: blue }
+  &.stage-2 { background: red }
+  &.stage-3 { background: yellow }
+  &.stage-4 { background: orange; }
+  &.stage-5 { background: #4caf50; }
 
   i {
     color: #ffffffa6;
