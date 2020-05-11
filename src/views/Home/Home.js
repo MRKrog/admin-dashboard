@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
 import AccountsTable from "../../containers/AccountsTable";
-
+import AdminMore from "../../containers/AdminMore";
 
 const Home = () => {
   const userAccounts = useSelector(state => state.userAccounts);
@@ -23,6 +23,7 @@ const Home = () => {
       <section className="AccountsTable">
         <AccountsTable />
       </section>
+      <AdminMore />
     </div>
   )
 }
