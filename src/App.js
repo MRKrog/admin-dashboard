@@ -12,8 +12,15 @@ class App extends Component {
     this.state = {}
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.fetchData()
+  }
 
+  fetchData = async () => {
+    let url = 'http://localhost:3000/api/v1/user';
+    const response = await fetch(url);
+    const data = await response.json();
+    this.props.setUserAccounts(data);
   }
 
   render() {
@@ -49,6 +56,7 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
   setLoading: data => dispatch(actions.setLoading(data)),
   setError: data => dispatch(actions.setError(data)),
+  setUserAccounts: data => dispatch(actions.setUserAccounts(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

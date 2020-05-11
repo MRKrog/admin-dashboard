@@ -182,7 +182,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AccountsTable = () => {
+const AccountsTable = (props) => {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('business_name');
@@ -287,16 +287,16 @@ const AccountsTable = () => {
               {
                 stableSort(search ? searchAccounts : userAccounts, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
+                .map((user, index) => {
                   return (
-                    <TableRow tabIndex={-1} key={row.id}>
-                      <TableCell align="left">{row.business_name}</TableCell>
-                      <TableCell align="left">{row.email}</TableCell>
-                      <TableCell className={classes.hideCopy} align="left">{row.website_url}</TableCell>
-                      <TableCell align="left">{moment(row.created_at).format("MM-DD-YYYY")}</TableCell>
+                    <TableRow tabIndex={-1} key={user.id}>
+                      <TableCell align="left">{user.business_name}</TableCell>
+                      <TableCell align="left">{user.email}</TableCell>
+                      <TableCell className={classes.hideCopy} align="left">{user.website_url}</TableCell>
+                      <TableCell align="left">{moment(user.created_at).format("MM-DD-YYYY")}</TableCell>
                       <TableCell align="left">
                         <Tooltip title="More Info">
-                          <button className="MoreInfoBtn" onClick={handleMoreInfo}>
+                          <button className="MoreInfoBtn" onClick={props.toggleDrawer('accountInfo', true, user.id, user.uuid)}>
                             <i className="far fa-plus"></i>
                           </button>
                         </Tooltip>
