@@ -1,49 +1,47 @@
 .AccountsTable {
   display: flex;
   width: 100%;
+}
 
-  .Account-Actions {
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #f3f3f3;
+.Account-Actions {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f3f3f3;
 
-    .Title {
-      h1 {
-        margin: 0;
-      }
-    }
-
-    #user-account-select {
-      padding: 8.5px 14px;
-      padding-right: 32px;
-    }
-
-    .Account-Search {
-      display: flex;
-    }
-
-  }
-
-  .MoreInfoBtn {
-    border: none;
-    line-height: 1;
-    border-radius: 50%;
-    background: #4caf50;
-    height: 35px;
-    display: flex;
-    width: 35px;
-    box-shadow: 0px 0px 5px 1px #00000026;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    i {
-      color: #ffffffa6;
-      font-size: 20px;
+  .Title {
+    h1 {
+      margin: 0;
     }
   }
 
+  #user-account-select {
+    padding: 8.5px 14px;
+    padding-right: 32px;
+  }
 
+  .Account-Search {
+    display: flex;
+  }
+
+}
+
+.MoreInfoBtn {
+  border: none;
+  line-height: 1;
+  border-radius: 50%;
+  background: #4caf50;
+  height: 35px;
+  display: flex;
+  width: 35px;
+  box-shadow: 0px 0px 5px 1px #00000026;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  i {
+    color: #ffffffa6;
+    font-size: 20px;
+  }
 }

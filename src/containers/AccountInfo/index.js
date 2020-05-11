@@ -1,8 +1,6 @@
-import React from 'react';
-import clsx from 'clsx';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -19,15 +17,32 @@ const useStyles = makeStyles({
 
 const AccountInfo = (props) => {
   const classes = useStyles();
+  const [user, setUser] = useState(null)
+
+ useEffect(() => {
+    async function fetchData() {
+      console.log(props);
+      let url = 'http://localhost:3005/api/v1/findAllUserData';
+      let options = {
+        method: "GET",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ levar_user_id: props.id, uuid: props.uuid }),
+      };
+      const response = await fetch(url, options);
+      // const data = await response.json();
+      // console.log('data', data);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div>
-      <Drawer anchor={'bottom'} open={props.state['accountInfo']} onClose={props.toggleDrawer('accountInfo', false)}>
+      <Drawer anchor={'bottom'} open={props.state['accountInfoDrawer']} onClose={props.toggleDrawer('accountInfoDrawer', false)}>
         <div
           className={classes.fullList}
           role="presentation"
-          onClick={props.toggleDrawer('accountInfo', false)}
-          onKeyDown={props.toggleDrawer('accountInfo', false)}
+          onClick={props.toggleDrawer('accountInfoDrawer', false)}
+          onKeyDown={props.toggleDrawer('accountInfoDrawer', false)}
         >
           <List>
             {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (

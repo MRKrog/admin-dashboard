@@ -191,7 +191,7 @@ const AccountsTable = (props) => {
 
   const [search, setSearch] = useState('');
   const [searchAccounts, setSearchAccounts] = useState([]);
-  const [selectColumn, setSelectColumn] = useState('email');
+  const [selectColumn, setSelectColumn] = useState('business_name');
 
   const userAccounts = useSelector(state => state.userAccounts);
 
@@ -208,14 +208,13 @@ const AccountsTable = (props) => {
   }, [search, userAccounts, selectColumn]);
 
   const handleSearch = (event) => {
-    setSearch(event.target.value);
+    let searchText = (event.target.value).toLowerCase()
+    setSearch(searchText);
   };
 
   const handleColumnSelect = (event) => {
     setSelectColumn(event.target.value);
   }
-
-  const handleMoreInfo = () => {};
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -296,7 +295,7 @@ const AccountsTable = (props) => {
                       <TableCell align="left">{moment(user.created_at).format("MM-DD-YYYY")}</TableCell>
                       <TableCell align="left">
                         <Tooltip title="More Info">
-                          <button className="MoreInfoBtn" onClick={props.toggleDrawer('accountInfo', true, user.id, user.uuid)}>
+                          <button className="MoreInfoBtn" onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
                             <i className="far fa-plus"></i>
                           </button>
                         </Tooltip>

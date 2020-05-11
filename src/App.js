@@ -15,9 +15,9 @@ class App extends Component {
   }
 
   fetchData = async () => {
-    let url = 'http://localhost:3000/api/v1/user';
+    let url = 'http://localhost:3005/api/v1/findAllUsers';
     const response = await fetch(url);
-    const data = await response.json();
+    const { data } = await response.json();
     this.props.setUserAccounts(data);
   }
 
