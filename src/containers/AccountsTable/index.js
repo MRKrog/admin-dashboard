@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 import { makeStyles, fade } from '@material-ui/core/styles';
@@ -13,17 +13,17 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 
 import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Switch from '@material-ui/core/Switch';
+// import DeleteIcon from '@material-ui/icons/Delete';
+// import FilterListIcon from '@material-ui/icons/FilterList';
 
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+// import InputLabel from '@material-ui/core/InputLabel';
+// import FormControl from '@material-ui/core/FormControl';
 
 import * as moment from 'moment';
 
@@ -63,7 +63,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -102,7 +102,6 @@ EnhancedTableHead.propTypes = {
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -177,58 +176,52 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
   selectInput: {
-    padding: '8.5px 14px'
+    padding: '8.5px 14px',
+    paddingRight: '32px'
   }
 }));
 
-export default function AccountsTable({ allUsers }) {
+const AccountsTable = () => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('business_name');
-  const [selected, setSelected] = React.useState([]);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('business_name');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [search, setSearch] = React.useState('');
-  const [searchAccounts, setSearchAccounts] = React.useState([]);
-  const [selectColumn, setSelectColumn] = React.useState('');
+  const [search, setSearch] = useState('');
+  const [searchAccounts, setSearchAccounts] = useState([]);
+  const [selectColumn, setSelectColumn] = useState('email');
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  // const [userAccounts, setuserAccounts] = React.useState();
   const userAccounts = useSelector(state => state.userAccounts);
 
-   React.useEffect(() => {
-    const results = userAccounts.filter(person =>
-      person.email.toLowerCase().includes(search)
-    );
-    console.log(results);
-    setSearchAccounts(results);
-  }, [search]);
+  useEffect(() => {
+    const searchResults = userAccounts.filter(user => {
+      if(user[selectColumn] === null) return null
+      if(user[selectColumn].toLowerCase().includes(search)) {
+        return user
+      } else {
+        return null
+      }
+    });
+    setSearchAccounts(searchResults);
+  }, [search, userAccounts, selectColumn]);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
-    console.log(search);
   };
 
   const handleColumnSelect = (event) => {
     setSelectColumn(event.target.value);
   }
 
-  const handleMoreInfo = () => {
-
-  };
+  const handleMoreInfo = () => {};
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
-  const handleClick = (event, name) => {};
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -237,8 +230,6 @@ export default function AccountsTable({ allUsers }) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const isSelected = (name) => selected.indexOf(name) !== -1;
 
   return (
     <div className={classes.root}>
@@ -283,7 +274,6 @@ export default function AccountsTable({ allUsers }) {
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            aria-label="enhanced table"
             stickyHeader
             aria-label="sticky table"
           >
@@ -292,7 +282,6 @@ export default function AccountsTable({ allUsers }) {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={userAccounts.length}
             />
             <TableBody>
               {
@@ -321,7 +310,7 @@ export default function AccountsTable({ allUsers }) {
         <TablePagination
           rowsPerPageOptions={[10, 25]}
           component="div"
-          count={userAccounts.length}
+          count={search ? searchAccounts.length : userAccounts.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -331,6 +320,8 @@ export default function AccountsTable({ allUsers }) {
     </div>
   );
 }
+
+export default AccountsTable;
 
 // accepts_marketing: null
 // address: "222 West Merchandise Mart Plaza #1212"
@@ -350,20 +341,3 @@ export default function AccountsTable({ allUsers }) {
 // uuid: "9a219350-f35b-4284-9a00-2cceae2bf262"
 // website_url: "https://ecommerce-demo.levar.io"
 // zip: "60654"
-
-
-// handleSearch = event => {
-//   const {data} = this.state
-//   let filteredDatas = []
-//   filteredDatas = data.filter(e => {
-//       let mathesItems = Object.values(e)
-//       let retVal = true;
-//       mathesItems.forEach(e => {
-//           const regex = new RegExp(event.target.value, 'gi')
-//           if (typeof e == 'string')
-//               retVal = e.match(regex)
-//       })
-//       return retVal;
-//   })
-//   this.setState({filterData: filteredDatas, searchValue: event.target.value})
-// }

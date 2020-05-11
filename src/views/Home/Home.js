@@ -13,7 +13,6 @@ const Home = () => {
       let url = 'http://localhost:3000/api/v1/user';
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data);
       dispatch(actions.setUserAccounts(data));
     }
     fetchData();
@@ -22,7 +21,7 @@ const Home = () => {
   return (
     <div className="Home">
       <section className="AccountsTable">
-        <AccountsTable allUsers={userAccounts} />
+        <AccountsTable />
       </section>
     </div>
   )
