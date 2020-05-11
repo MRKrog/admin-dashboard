@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 const useStyles = makeStyles({
   fullList: {
@@ -18,6 +11,10 @@ const useStyles = makeStyles({
 
 const AccountInfo = (props) => {
   const classes = useStyles();
+  const [state, setState] = useState({
+    email: '',
+    first_name: '',
+  });
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState([])
 
@@ -41,8 +38,9 @@ const AccountInfo = (props) => {
 
   const handleClose = () => {
 
-
   }
+
+  console.log('loaded');
 
   return (
     <div>
@@ -53,7 +51,7 @@ const AccountInfo = (props) => {
           <div className={classes.fullList} role="presentation">
             <section>
               <h1>User Account</h1>
-              {user.userInfo.email}
+
               <br />
               <br />
               <button onClick={handleSave}>Save</button>

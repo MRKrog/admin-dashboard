@@ -286,7 +286,6 @@ const AccountsTable = (props) => {
                 stableSort(search ? searchAccounts : userAccounts, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((user, index) => {
-                  console.log('setup_wizard_state' , user.setup_wizard_state);
                   return (
                     <TableRow tabIndex={-1} key={user.id}>
                       <TableCell align="left">{user.business_name}</TableCell>
