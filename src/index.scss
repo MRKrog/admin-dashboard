@@ -7,9 +7,11 @@
 
 /* #### containers #### */
 @import './containers/AccountsTable/AccountsTable';
+@import './containers/AccountInfo/AccountInfo';
 
 /* #### components #### */
 @import './components/Loading/Loading';
+@import './components/PageLoader/PageLoader';
 
 
 * {

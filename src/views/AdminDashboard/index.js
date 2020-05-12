@@ -17,7 +17,7 @@ const AdminDashboard = () => {
   return (
     <div className="AdminDashboard">
       <AccountsTable toggleDrawer={toggleDrawer} />
-      <AccountInfo toggleDrawer={toggleDrawer} state={state} />
+      <AccountInfo toggleDrawer={toggleDrawer} state={state} /> 
     </div>
   )
 }

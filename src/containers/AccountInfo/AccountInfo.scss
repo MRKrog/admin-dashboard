@@ -1,0 +1,17 @@
+.Admin-Info {
+  display: flex;
+}
+
+.Admin-Form-Info {
+  flex: 1;
+  padding: 1em;
+
+  .User-Info-Form {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.Admin-Credit-Info {
+  flex: 1;
+}
