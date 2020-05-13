@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import PageLoader from '../../components/PageLoader';
 
-import AdminInfo from '../../components/AdminInfo';
-import AdminCredits from '../../components/AdminCredits';
+import AdminInfoContainer from '../../components/AdminInfoContainer';
+import AdminCreditContainer from '../../components/AdminCreditContainer';
 
 
 const useStyles = makeStyles({
@@ -44,18 +42,6 @@ const AccountInfo = (props) => {
     // }
   }, [props]);
 
-
-  const handleSave = () => {
-    console.log('saving');
-  }
-
-  const onChange = e => {
-    const { name, value } = e.target;
-    // setState(prevState => ({ ...prevState, [name]: value }));
-  };
-
-  console.log(user)
-
   return (
     <div>
       <Drawer anchor={'bottom'}
@@ -66,10 +52,9 @@ const AccountInfo = (props) => {
           <PageLoader />
         ) : (
           <div className={classes.fullList} role="presentation">
-            <h1>User Account</h1>
-            <section className="Admin-Info">
-              { Object.keys(user).length > 0 && <AdminInfo userInfo={user.userInfo} /> }
-              { Object.keys(user).length > 0 && <AdminCredits {...user} /> }
+            <section className="AccountInfo">
+              { Object.keys(user).length > 0 && <AdminInfoContainer {...user} /> }
+              { Object.keys(user).length > 0 && <AdminCreditContainer {...user} /> }
             </section>
           </div>
         ) }
@@ -110,81 +95,3 @@ export default AccountInfo;
 // uuid: "56c8f98b-e849-43d0-89f6-72d2b6dcc168"
 // website_url: "test.com"
 // zip: "60602"
-
-
-
-// const { useState } = React;
-//
-// function signupUser() {
-//   return new Promise(resolve => {
-//     setTimeout(resolve, 1000);
-//   });
-// }
-//
-// const initialState = {
-//   username: "",
-//   email: "",
-//   password: "",
-//   passwordConfirmation: ""
-// };
-//
-// const Signup = () => {
-//   const [
-//     { username, email, password, passwordConfirmation },
-//     setState
-//   ] = useState(initialState);
-//
-//   const clearState = () => {
-//     setState({ ...initialState });
-//   };
-//
-//   const onChange = e => {
-//     const { name, value } = e.target;
-//     setState(prevState => ({ ...prevState, [name]: value }));
-//   };
-//
-//   const handleSubmit = e => {
-//     e.preventDefault();
-//     signupUser().then(clearState);
-//   };
-//
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <div>
-//         <label>
-//           Username:
-//           <input value={username} name="username" onChange={onChange} />
-//         </label>
-//       </div>
-//       <div>
-//         <label>
-//           Email:
-//           <input value={email} name="email" onChange={onChange} />
-//         </label>
-//       </div>
-//       <div>
-//         <label>
-//           Password:
-//           <input
-//             value={password}
-//             name="password"
-//             type="password"
-//             onChange={onChange}
-//           />
-//         </label>
-//       </div>
-//       <div>
-//         <label>
-//           Confirm Password:
-//           <input
-//             value={passwordConfirmation}
-//             name="passwordConfirmation"
-//             type="password"
-//             onChange={onChange}
-//           />
-//         </label>
-//       </div>
-//       <button>Submit</button>
-//     </form>
-//   );
-// };

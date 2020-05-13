@@ -184,9 +184,9 @@ const AccountsTable = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('mike');
   const [searchAccounts, setSearchAccounts] = useState([]);
-  const [selectColumn, setSelectColumn] = useState('business_name');
+  const [selectColumn, setSelectColumn] = useState('email');
 
   const userAccounts = useSelector(state => state.userAccounts);
 
@@ -289,7 +289,7 @@ const AccountsTable = (props) => {
                       <TableCell className={classes.hideCopy} align="left">{user.website_url}</TableCell>
                       <TableCell align="left">{moment(user.created_at).format("MM-DD-YYYY")}</TableCell>
                       <TableCell align="left">
-                        <Tooltip title="More Info">
+                        <Tooltip title="Account Info">
                           <button className={`MoreInfoBtn stage-${user.setup_wizard_state}`} onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
                             {user.setup_wizard_state}
                           </button>
