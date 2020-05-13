@@ -12,3 +12,13 @@ export const setUserAccounts = data => ({
   type: "SET_USER_ACCOUNTS",
   data
 });
+
+export const setUserAccountUpdate = data => ({
+  type: "SET_USER_ACCOUNT_UPDATE",
+  data
+});
+
+export const setPageLoading = loading => ({
+  type: "SET_PAGE_LOADING",
+  loading
+});

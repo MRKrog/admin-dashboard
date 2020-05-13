@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions";
+
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -16,13 +19,12 @@ class UserInfo extends Component {
 			state: '',
 			phone_number: '',
 			zip: '',
+			website_url: '',
 		}
 	}
 
 	componentDidMount() {
-		console.log(this.props)
 		this.setState({
-			email: this.props.userInfo.email,
 			business_name: this.props.userInfo.business_name || '',
 			first_name: this.props.userInfo.first_name || '',
 			last_name: this.props.userInfo.last_name || '',
@@ -32,6 +34,7 @@ class UserInfo extends Component {
 			state: this.props.userInfo.state || '',
 			phone_number: this.props.userInfo.phone_number || '',
 			zip: this.props.userInfo.zip || '',
+			website_url: this.props.userInfo.website_url || '',
 		})
 	}
 
@@ -40,14 +43,39 @@ class UserInfo extends Component {
     this.setState({
       [name]: value
     });
-  }
+  };
 
-	handleSubmit = () => {
-		console.log('Saving', this.state)
+	handleSubmit = async () => {
+		
+		this.props.setPageLoading(true);
+		try {
+			let userData = { ...this.state }
+			let options = {
+				method: "PUT",
+				headers: {
+					"Content-Type" : "application/json"
+				},
+				body: JSON.stringify(userData)
+			}
+			let url = `http://localhost:3005/api/v1/updateUser/${this.props.userInfo.id}`
+			const response = await fetch(url, options);
+			if(!response.ok) {throw new Error(`Unable to update user`)}
+			const { updatedUser } = await response.json()
+			this.props.setUserAccountUpdate(updatedUser)
+			
+		} catch(e) {
+			console.log("There was an error updating user info", e)
+		}
+		this.props.setPageLoading(false);
+		// loading off
+		// update Redux state for user
+
+		// close the drawer
 		
 	}
-
+	
 	render() {
+	
 		return (
 			<div className="UserInfo">              
 				<div className="User-Info-Form">
@@ -147,13 +175,39 @@ class UserInfo extends Component {
 							onChange={this.handleInputChange}
 						/>
 					</section>
-				</div>
-				<div className="submit-button">
-					<Button type="submit" variant="contained" onClick={this.handleSubmit}>Save</Button>
+					<section className="infoRow">
+					<TextField
+							id="standard-basic-zip"
+							label="Website"
+							margin="dense"
+							type="text"
+							name="website_url"
+							className='User-Field'
+							value={this.state.website_url}
+							onChange={this.handleInputChange}
+						/>
+					<div className="submit-button">
+						<Button type="submit" variant="contained" onClick={this.handleSubmit}>Save</Button>
+					</div>
+					</section>
 				</div>
 			</div>
 		)
 	}
 }
 
-export default UserInfo;
+export const mapStateToProps = state => ({
+	loading: state.loading,
+});
+
+export const mapDispatchToProps = dispatch => ({
+	setPageLoading: data => dispatch(actions.setPageLoading(data)),
+	setUserAccountUpdate: data => dispatch(actions.setUserAccountUpdate(data))
+});
+
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
+
+// this.props.toggleDrawer('accountInfoDrawer', false)

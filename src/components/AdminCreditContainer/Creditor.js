@@ -55,7 +55,6 @@ const Creditor = (props) => {
   // console.log("shortid", shortId.generate())
   return (
     <div className="Creditor">
-    
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Credit Amount</InputLabel>
         <Select

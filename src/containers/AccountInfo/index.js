@@ -53,8 +53,8 @@ const AccountInfo = (props) => {
         ) : (
           <div className={classes.fullList} role="presentation">
             <section className="AccountInfo">
-              { Object.keys(user).length > 0 && <AdminInfoContainer {...user} /> }
-              { Object.keys(user).length > 0 && <AdminCreditContainer {...user} /> }
+              { Object.keys(user).length > 0 && <AdminInfoContainer toggleDrawer={props.toggleDrawer} {...user} /> }
+              { Object.keys(user).length > 0 && <AdminCreditContainer toggleDrawer={props.toggleDrawer} {...user} /> }
             </section>
           </div>
         ) }
