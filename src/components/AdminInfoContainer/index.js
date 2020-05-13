@@ -6,17 +6,15 @@ class AdminInfoContainer extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-
 		}
 	}
 
-	componentDidMount() {
-	}
+	componentDidMount() {}
 
 	render() {
 		return (
 			<div className="AdminInfoContainer">              
-				<UserInfo userInfo={this.props.userInfo} />
+				<UserInfo toggleDrawer={this.props.toggleDrawer} userInfo={this.props.userInfo} />
 				<UserAggregate userTransactions={this.props.userTransactions} 
 											 productCount={this.props.productCount}
 											 variantCount={this.props.variantCount}

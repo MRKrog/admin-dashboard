@@ -19,13 +19,11 @@ class AdminCreditContainer extends Component {
       return (
 				<div className="AdminCreditContainer">
           { this.props.userTransactions.length > 0 ? (
-            <>
 	          <TransactionTable userTransactions={this.props.userTransactions} />
-            <Creditor {...this.props.userInfo} />
-            </>
           ) : (
-            <div> No Trannys </div>
+            <div> No Trannys Table Bitch </div>
           ) }
+          <Creditor {...this.props.userInfo} />
 				</div>
     );
   }
