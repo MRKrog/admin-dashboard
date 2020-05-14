@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     padding: '1em 1em 2em 1em;',
   },
   accountHeader: {
-    background: '#efefef',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -46,7 +46,6 @@ class UserInfo extends Component {
   };
 
 	handleSubmit = async () => {
-
 		this.props.setPageLoading(true);
 		try {
 			let userData = { ...this.state }
@@ -67,11 +66,6 @@ class UserInfo extends Component {
 			console.log("There was an error updating user info", e)
 		}
 		this.props.setPageLoading(false);
-		// loading off
-		// update Redux state for user
-
-		// close the drawer
-
 	}
 
 	render() {

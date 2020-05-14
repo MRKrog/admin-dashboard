@@ -9,16 +9,14 @@ class AdminInfoContainer extends Component {
 		}
 	}
 
-	componentDidMount() {}
-
 	render() {
 		return (
-			<div className="AdminInfoContainer">              
-				<UserInfo toggleDrawer={this.props.toggleDrawer} userInfo={this.props.userInfo} />
-				<UserAggregate userTransactions={this.props.userTransactions} 
+			<div className="AdminInfoContainer">
+				<UserAggregate userTransactions={this.props.userTransactions}
 											 productCount={this.props.productCount}
 											 variantCount={this.props.variantCount}
 				/>
+				<UserInfo toggleDrawer={this.props.toggleDrawer} userInfo={this.props.userInfo} />
 			</div>
 		)
 	}

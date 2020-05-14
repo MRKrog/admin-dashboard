@@ -10,7 +10,7 @@ import shortId from 'shortid';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 132,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -41,7 +41,7 @@ const Creditor = (props) => {
           "Content-Type" : "application/json"
         },
         body: JSON.stringify(transaction)
-      }  
+      }
 
       let url = `http://localhost:3005/api/v1/createTransaction/${props.id}`;
       const response = await fetch(url, options);
@@ -51,7 +51,7 @@ const Creditor = (props) => {
       console.log("Hey that post didnt work/", e);
   }
 }
-  
+
   // console.log("shortid", shortId.generate())
   return (
     <div className="Creditor">
