@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as actions from "../../redux/actions";
 import PropTypes from 'prop-types';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -176,26 +177,19 @@ const useStyles = makeStyles((theme) => ({
     padding: '8.5px 14px',
     paddingRight: '32px'
   },
-  accountBtn: {
-    "& > button &:nth-child(2)":{
-      margin: '0 1em'
-    },
-    '& > button': {
-      outline: 'none',
-    },
-  }
 }));
 
 const AccountsTable = (props) => {
   const classes = useStyles();
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('business_name');
+  const [order, setOrder] = useState('desc');
+  const [orderBy, setOrderBy] = useState('created_at');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('krog');
   const [searchAccounts, setSearchAccounts] = useState([]);
-  const [selectColumn, setSelectColumn] = useState('email');
+  const [selectColumn, setSelectColumn] = useState('business_name');
+  const dispatch = useDispatch();
 
   const userAccounts = useSelector(state => state.userAccounts);
 
@@ -218,6 +212,19 @@ const AccountsTable = (props) => {
 
   const handleColumnSelect = (event) => {
     setSelectColumn(event.target.value);
+  }
+
+  const deleteUser = async (id, uuid) => {
+    dispatch(actions.setPageLoading(true));
+    try {
+      // const url = `http://localhost:3005/api/v1/masterDelete/${id}/${uuid}`
+      // const response = await fetch(url, {method: 'DELETE'})
+      // const data = await response.json() 
+      dispatch(actions.setUserAccountDelete({ id }));
+    } catch(e) {
+      console.log(e)
+    }
+    dispatch(actions.setPageLoading(false));
   }
 
   const handleRequestSort = (event, property) => {
@@ -310,8 +317,8 @@ const AccountsTable = (props) => {
                           </Button>
                           }
                           { user.setup_wizard_state === 5 &&
-                          <Button onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
-                            <Tooltip title="View Products">
+                          <Button onClick={props.toggleDrawer('accountPipelineDrawer', true, user.id, user.uuid)}>
+                            <Tooltip title="Asset Pipeline">
                               <ExtensionIcon style={{ color: '#ffffff' }} />
                             </Tooltip>
                           </Button>
@@ -323,8 +330,8 @@ const AccountsTable = (props) => {
                             </Tooltip>
                           </Button>
                           }
-                          <Button >
-                            <Tooltip title="Account Info">
+                          <Button onClick={() => deleteUser(user.id, user.uuid)}>
+                            <Tooltip title="Delete Account">
                               <DeleteIcon style={{ color: '#ffffff' }} />
                             </Tooltip>
                           </Button>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AccountsTable from "../../containers/AccountsTable";
 import AccountInfo from "../../containers/AccountInfo";
+import AccountPipeline from "../../containers/AccountPipeline";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -19,14 +20,15 @@ const useStyles = makeStyles((theme) => ({
 const AdminDashboard = () => {
   const [state, setState] = useState({
     accountInfoDrawer: false,
+    accountPipelineDrawer: false,
     id: undefined,
     uuid: undefined,
   });
   const classes = useStyles();
 
-  const toggleDrawer = (anchor, open, id, uuid) => (event) => {
+  const toggleDrawer = (drawer, open, id, uuid) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
-    setState({ ...state, [anchor]: open, id, uuid });
+    setState({ ...state, [drawer]: open, id, uuid });
   };
 
   return (
@@ -36,6 +38,7 @@ const AdminDashboard = () => {
           <Grid item xs={12}>
             <AccountsTable toggleDrawer={toggleDrawer} />
             { state.accountInfoDrawer && <AccountInfo toggleDrawer={toggleDrawer} state={state} /> }
+            { state.accountPipelineDrawer && <AccountPipeline toggleDrawer={toggleDrawer} state={state} /> }
           </Grid>
         </Grid>
       </div>

@@ -22,3 +22,9 @@ export const setPageLoading = loading => ({
   type: "SET_PAGE_LOADING",
   loading
 });
+
+
+export const setUserAccountDelete = data => ({
+  type: "SET_USER_ACCOUNT_DELETE",
+  data
+});
