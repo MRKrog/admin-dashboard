@@ -16,10 +16,13 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import * as moment from 'moment';
 import PersonIcon from '@material-ui/icons/Person';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ExtensionIcon from '@material-ui/icons/Extension';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -48,12 +51,12 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'business_name', numeric: false, disablePadding: false, label: 'Business' },
-  { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
-  { id: 'website_url', numeric: false, disablePadding: false, label: 'Domain' },
-  { id: 'created_at', numeric: true, disablePadding: false, label: 'Created' },
-  { id: 'setup_wizard_state', numeric: true, disablePadding: false, label: 'Wizard' },
-  { id: 'view', numeric: false, disablePadding: false, label: '' },
+  { id: 'business_name', numeric: false, disablePadding: false, label: 'Business', align: 'left' },
+  { id: 'email', numeric: false, disablePadding: false, label: 'Email', align: 'left' },
+  { id: 'website_url', numeric: false, disablePadding: false, label: 'Domain', align: 'left' },
+  { id: 'created_at', numeric: true, disablePadding: false, label: 'Created', align: 'left' },
+  { id: 'setup_wizard_state', numeric: true, disablePadding: false, label: 'Wizard', align: 'center' },
+  { id: 'view', numeric: false, disablePadding: false, label: '', align: 'left' },
 ];
 
 function EnhancedTableHead(props) {
@@ -68,7 +71,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={'left'}
+            align={headCell.align}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -174,7 +177,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '32px'
   },
   accountBtn: {
-    "button &:nth-child(2)":{
+    "& > button &:nth-child(2)":{
       margin: '0 1em'
     },
     '& > button': {
@@ -296,29 +299,36 @@ const AccountsTable = (props) => {
                         <a href={`http://${user.website_url}`} target="_blank" rel="noopener noreferrer">{user.website_url}</a>
                       </TableCell>
                       <TableCell align="left">{moment(user.created_at).format("MM-DD-YYYY")}</TableCell>
-                      <TableCell align="left">{user.setup_wizard_state}</TableCell>
+                      <TableCell align="center">{user.setup_wizard_state}</TableCell>
                       <TableCell align="left" className={classes.accountBtn}>
-                        <div style={{ display: 'flex' }}>
-                        { user.setup_wizard_state === 5 &&
-                          <Tooltip title="Account Info">
-                            <button className={`MoreInfoBtn stage-${user.setup_wizard_state}`} onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
+                        <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+                          { user.setup_wizard_state === 5 &&
+                          <Button onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
+                            <Tooltip title="Account Info">
                               <PersonIcon style={{ color: '#ffffff' }} />
-                            </button>
-                          </Tooltip>
-                        }
-                        { user.setup_wizard_state === 5 &&
-                          <Tooltip title="View Live">
-                            <button className={`MoreInfoBtn stage-${user.setup_wizard_state}`} onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
+                            </Tooltip>
+                          </Button>
+                          }
+                          { user.setup_wizard_state === 5 &&
+                          <Button onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
+                            <Tooltip title="View Products">
+                              <ExtensionIcon style={{ color: '#ffffff' }} />
+                            </Tooltip>
+                          </Button>
+                          }
+                          { user.setup_wizard_state === 5 &&
+                          <Button >
+                            <Tooltip title="View Live Site">
                               <VisibilityIcon style={{ color: '#ffffff' }} />
-                            </button>
-                          </Tooltip>
-                        }
-                        <Tooltip title="Delete Account">
-                          <button className={`MoreInfoBtn stage-${user.setup_wizard_state}`} onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
-                            <DeleteIcon style={{ color: '#ffffff' }} />
-                          </button>
-                        </Tooltip>
-                        </div>
+                            </Tooltip>
+                          </Button>
+                          }
+                          <Button >
+                            <Tooltip title="Account Info">
+                              <DeleteIcon style={{ color: '#ffffff' }} />
+                            </Tooltip>
+                          </Button>
+                        </ButtonGroup>
                       </TableCell>
                     </TableRow>
                   );
@@ -342,7 +352,6 @@ const AccountsTable = (props) => {
 
 export default AccountsTable;
 
-// <i className="far fa-plus"></i>
 
 // accepts_marketing: null
 // address: "222 West Merchandise Mart Plaza #1212"
