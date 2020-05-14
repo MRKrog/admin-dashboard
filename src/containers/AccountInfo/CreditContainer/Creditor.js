@@ -25,14 +25,13 @@ const Creditor = (props) => {
     setCredits(event.target.value);
   };
 
-
   const handleSubmit = async () => {
     try {
       let transaction = {
-        "credit_amount" : credits,
-        "transaction_type" : "credit",
-        "stripe_invoice_id" : shortId.generate(),
-        "status" : "accepted"
+        credit_amount : credits,
+        transaction_type : "credit",
+        stripe_invoice_id : shortId.generate(),
+        status : "accepted"
       }
 
       let options = {
@@ -45,14 +44,12 @@ const Creditor = (props) => {
 
       let url = `http://localhost:3005/api/v1/createTransaction/${props.id}`;
       const response = await fetch(url, options);
-      if(!response.ok) {  }
 
     } catch(e) {
       console.log("Hey that post didnt work/", e);
+    }
   }
-}
 
-  // console.log("shortid", shortId.generate())
   return (
     <div className="Creditor">
       <FormControl className={classes.formControl}>
@@ -71,8 +68,8 @@ const Creditor = (props) => {
         </Select>
       </FormControl>
       <div className="submit-button">
-						<Button type="submit" variant="contained" onClick={handleSubmit}>Add Credit</Button>
-				</div>
+				<Button type="submit" variant="contained" onClick={handleSubmit}>Add Credit</Button>
+			</div>
     </div>
   );
 }
