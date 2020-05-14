@@ -12,11 +12,11 @@ import TableRow from '@material-ui/core/TableRow';
 import * as moment from 'moment';
 
 const columns = [
-  { id: 'name1', label: 'Type', minWidth: 170 },
-  { id: 'name2', label: 'Ammount', minWidth: 100 },
-  { id: 'name3', label: 'Stripe ID', minWidth: 100 },
-  { id: 'name4', label: 'Date', minWidth: 100 },
+  { id: 'name1', label: 'Type', minWidth: 115 },
+  { id: 'name2', label: 'Amount', minWidth: 75 },
+  { id: 'name4', label: 'Date', minWidth: 120 },
   { id: 'name5', label: 'Status', minWidth: 100 },
+  { id: 'name3', label: 'ID', minWidth: 50 },
 ];
 
 const useStyles = makeStyles({
@@ -24,11 +24,11 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
-    maxHeight: 300,
+    maxHeight: 380,
   },
 });
 
-export default function StickyHeadTable(props) {
+const TransactionTable = (props) => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -42,7 +42,6 @@ export default function StickyHeadTable(props) {
     setPage(0);
   };
 
-  console.log(props.userTransactions)
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -71,13 +70,13 @@ export default function StickyHeadTable(props) {
                     {row.credit_amount}
                   </TableCell>
                   <TableCell align='left'>
-                    {row.stripe_invoice_id}
-                  </TableCell>
-                  <TableCell align='left'>
                     {moment(row.date_created).format("MM-DD-YYYY")}
                   </TableCell>
                   <TableCell align='left'>
                     {row.status}
+                  </TableCell>
+                  <TableCell align='left'>
+                    {row.stripe_invoice_id}
                   </TableCell>
                 </TableRow>
               );
@@ -98,12 +97,4 @@ export default function StickyHeadTable(props) {
   );
 }
 
-
-// credit_amount: 1
-// date_created: "2020-01-17T21:08:07.000Z"
-// id: 1
-// levar_user_id: 3
-// status: null
-// stripe_invoice_id: "ch_1G2230HUKD3cSJNOB3nDjGvc"
-// stripe_invoice_url: "https://pay.stripe.com/receipts/acct_1FSojpHUKD3cSJNO/ch_1G2230HUKD3cSJNOB3nDjGvc/rcpt_GZANlAQw99wS3KcUf39bNbHLrW219qA"
-// transaction_type: "credit"
+export default TransactionTable;

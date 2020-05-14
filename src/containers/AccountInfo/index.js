@@ -1,97 +1,68 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from "react-redux";
+import * as actions from "../../redux/actions";
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import PageLoader from '../../components/PageLoader';
-
-import AdminInfoContainer from '../../components/AdminInfoContainer';
-import AdminCreditContainer from '../../components/AdminCreditContainer';
-
+import Grid from '@material-ui/core/Grid';
+import InfoContainer from './InfoContainer';
+import CreditContainer from './CreditContainer';
 
 const useStyles = makeStyles({
   fullList: {
     width: 'auto',
-    padding: '1em',
+    padding: '1em 1em 2em 1em;',
   },
-  adminform: {
+  accountHeader: {
     display: 'flex',
-
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottom: 'solid 1px #cccccc',
+    marginBottom: '1em',
   }
 });
 
 const AccountInfo = (props) => {
   const classes = useStyles();
-  const [loading, setLoading] = useState(false)
-  const [user, setUser] = useState([])
-
+  const [user, setUser] = useState([]);
+  const dispatch = useDispatch();
 
   async function fetchUser() {
-    if(props.state.accountInfoDrawer) {
-      setLoading(true);
-      let url = `http://localhost:3005/api/v1/findAllUserData/${props.state.id}/${props.state.uuid}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      setUser(data)
-      setLoading(false);
-    }
+    dispatch(actions.setPageLoading(true));
+    let url = `http://localhost:3005/api/v1/findAllUserData/${props.state.id}/${props.state.uuid}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    setUser(data);
+    dispatch(actions.setPageLoading(false));
   }
 
   useEffect(() => {
     fetchUser();
-    // return () => {
-      // setState({ ...initialState });
-    // }
-  }, [props]);
+  }, []);
 
+console.log(user);
   return (
-    <div>
-      <Drawer anchor={'bottom'}
-              open={props.state['accountInfoDrawer']}
-              onClose={props.toggleDrawer('accountInfoDrawer', false)}
-              >
-        { loading ? (
-          <PageLoader />
-        ) : (
-          <div className={classes.fullList} role="presentation">
-            <section className="AccountInfo">
-              { Object.keys(user).length > 0 && <AdminInfoContainer toggleDrawer={props.toggleDrawer} {...user} /> }
-              { Object.keys(user).length > 0 && <AdminCreditContainer toggleDrawer={props.toggleDrawer} {...user} /> }
-            </section>
-          </div>
-        ) }
+    <div className="AccountInfo">
+      <Drawer anchor={'bottom'} open={props.state['accountInfoDrawer']} onClose={props.toggleDrawer('accountInfoDrawer', false)}>
+        <div className={classes.fullList} role="presentation">
+        { Object.keys(user).length > 0 &&
+          <Grid container spacing={3}>
+            <Grid item xs={12} className={classes.accountHeader}>
+              <div><b>Account Info: {user.userInfo.email}</b></div>
+              <button className="AdminCloseBtn" onClick={props.toggleDrawer('accountInfoDrawer', false)}>
+                <i className="fas fa-times-circle"></i>
+              </button>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <InfoContainer toggleDrawer={props.toggleDrawer} {...user} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <CreditContainer toggleDrawer={props.toggleDrawer} {...user} />
+            </Grid>
+          </Grid> }
+        </div>
       </Drawer>
     </div>
   );
 }
 
 export default AccountInfo;
-
-
-// data >>
-// productCount: 395
-// userInfo: {id: 45, uuid: "2e5da892-af38-4fd2-b8b2-3caeeffdbeb2", email: "irios@bestias.cl", accepts_marketing: null, first_name: null, …}
-// userIntegration: {id: 55, levar_user_id: 45, integration_id: 1}
-// userStore: {id: 62, store_url: "bestiaschile.myshopify.com", shopify_store_id: "1187840066", shopify_access_token: "e424e8c411f4e56932d486bd5939fbb3", access_token_experation: 1582039239, …}
-// userTransactions: []
-// variantCount: 1728
-
-
-// userInfo >>>
-
-// accepts_marketing: null
-// address: "222 Street St."
-// business_name: "Dan Test"
-// city: "Chicago"
-// country: "United States"
-// created_at: "2020-04-05T15:59:49.000Z"
-// email: "desrig+test@gmail.com"
-// first_name: null
-// id: 11
-// last_name: null
-// phone_number: "8473335555"
-// setup_wizard_state: 5
-// state: "Illinois"
-// stripe_id: null
-// user_shopify_url: null
-// uuid: "56c8f98b-e849-43d0-89f6-72d2b6dcc168"
-// website_url: "test.com"
-// zip: "60602"

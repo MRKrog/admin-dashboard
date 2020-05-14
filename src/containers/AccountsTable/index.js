@@ -11,18 +11,15 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-
 import Tooltip from '@material-ui/core/Tooltip';
-
-
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
-
 import * as moment from 'moment';
-
+import PersonIcon from '@material-ui/icons/Person';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -55,6 +52,7 @@ const headCells = [
   { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
   { id: 'website_url', numeric: false, disablePadding: false, label: 'Domain' },
   { id: 'created_at', numeric: true, disablePadding: false, label: 'Created' },
+  { id: 'setup_wizard_state', numeric: true, disablePadding: false, label: 'Wizard' },
   { id: 'view', numeric: false, disablePadding: false, label: '' },
 ];
 
@@ -174,6 +172,14 @@ const useStyles = makeStyles((theme) => ({
   selectInput: {
     padding: '8.5px 14px',
     paddingRight: '32px'
+  },
+  accountBtn: {
+    "button &:nth-child(2)":{
+      margin: '0 1em'
+    },
+    '& > button': {
+      outline: 'none',
+    },
   }
 }));
 
@@ -184,7 +190,7 @@ const AccountsTable = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [search, setSearch] = useState('mike');
+  const [search, setSearch] = useState('');
   const [searchAccounts, setSearchAccounts] = useState([]);
   const [selectColumn, setSelectColumn] = useState('email');
 
@@ -286,14 +292,33 @@ const AccountsTable = (props) => {
                     <TableRow tabIndex={-1} key={user.id}>
                       <TableCell align="left">{user.business_name}</TableCell>
                       <TableCell align="left">{user.email}</TableCell>
-                      <TableCell className={classes.hideCopy} align="left">{user.website_url}</TableCell>
+                      <TableCell className={classes.hideCopy} align="left">
+                        <a href={`http://${user.website_url}`} target="_blank" rel="noopener noreferrer">{user.website_url}</a>
+                      </TableCell>
                       <TableCell align="left">{moment(user.created_at).format("MM-DD-YYYY")}</TableCell>
-                      <TableCell align="left">
-                        <Tooltip title="Account Info">
+                      <TableCell align="left">{user.setup_wizard_state}</TableCell>
+                      <TableCell align="left" className={classes.accountBtn}>
+                        <div style={{ display: 'flex' }}>
+                        { user.setup_wizard_state === 5 &&
+                          <Tooltip title="Account Info">
+                            <button className={`MoreInfoBtn stage-${user.setup_wizard_state}`} onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
+                              <PersonIcon style={{ color: '#ffffff' }} />
+                            </button>
+                          </Tooltip>
+                        }
+                        { user.setup_wizard_state === 5 &&
+                          <Tooltip title="View Live">
+                            <button className={`MoreInfoBtn stage-${user.setup_wizard_state}`} onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
+                              <VisibilityIcon style={{ color: '#ffffff' }} />
+                            </button>
+                          </Tooltip>
+                        }
+                        <Tooltip title="Delete Account">
                           <button className={`MoreInfoBtn stage-${user.setup_wizard_state}`} onClick={props.toggleDrawer('accountInfoDrawer', true, user.id, user.uuid)}>
-                            {user.setup_wizard_state}
+                            <DeleteIcon style={{ color: '#ffffff' }} />
                           </button>
                         </Tooltip>
+                        </div>
                       </TableCell>
                     </TableRow>
                   );

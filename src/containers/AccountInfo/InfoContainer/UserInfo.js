@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import * as actions from "../../redux/actions";
+import * as actions from "../../../redux/actions";
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -46,7 +46,6 @@ class UserInfo extends Component {
   };
 
 	handleSubmit = async () => {
-		
 		this.props.setPageLoading(true);
 		try {
 			let userData = { ...this.state }
@@ -62,22 +61,17 @@ class UserInfo extends Component {
 			if(!response.ok) {throw new Error(`Unable to update user`)}
 			const { updatedUser } = await response.json()
 			this.props.setUserAccountUpdate(updatedUser)
-			
+
 		} catch(e) {
 			console.log("There was an error updating user info", e)
 		}
 		this.props.setPageLoading(false);
-		// loading off
-		// update Redux state for user
-
-		// close the drawer
-		
 	}
-	
+
 	render() {
-	
+
 		return (
-			<div className="UserInfo">              
+			<div className="UserInfo">
 				<div className="User-Info-Form">
 					<section className="infoRow">
 						<TextField
@@ -177,7 +171,7 @@ class UserInfo extends Component {
 					</section>
 					<section className="infoRow">
 					<TextField
-							id="standard-basic-zip"
+							id="standard-basic-website_url"
 							label="Website"
 							margin="dense"
 							type="text"

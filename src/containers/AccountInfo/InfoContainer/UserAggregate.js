@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import * as actions from "../../redux/actions";
-
+import * as actions from "../../../redux/actions";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { mapStateToProps } from './UserInfo';
-
-
 
 class UserAggregate extends Component {
   constructor(props) {
@@ -24,13 +20,12 @@ class UserAggregate extends Component {
     }
   }
 
-	
 	componentDidMount() {
 		this.setState({
 			creditsOnHand: this.creditsAvailable(this.props.userTransactions),
 			creditsUsed: this.creditsUsed(this.props.userTransactions),
-			userProducts: this.props.productCount ||  '',
-			userVariants: this.props.variantCount ||  '',
+			userProducts: this.props.productCount ||  'N/A',
+			userVariants: this.props.variantCount ||  'N/A',
 			recentTransactions: this.props.userTransactions.length,
 		})
 	}
@@ -108,15 +103,12 @@ class UserAggregate extends Component {
 }
 
 
+const mapStateToProps = () => ({
 
+})
 
+const mapDispatchToProps = () => ({
 
-const mapStateToProps
-
-
-
+})
 
 export default connect(mapStateToProps, mapDispatchToProps) (UserAggregate);
-
-
-

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import * as actions from "./redux/actions";
 import AdminDashboard from './views/AdminDashboard';
-
+// import PageLoader from './components/PageLoader';
+import SimpleBackdrop from "./components/Backdrop/SimpleBackdrop";
 
 class App extends Component {
   constructor(){
@@ -27,6 +28,7 @@ class App extends Component {
         <div className="App-Content">
           <AdminDashboard />
         </div>
+        { this.props.pageLoading && <SimpleBackdrop /> }
       </div>
     );
   }
@@ -35,6 +37,7 @@ class App extends Component {
 export const mapStateToProps = state => ({
   loading: state.loading,
   error: state.error,
+  pageLoading: state.pageLoading,
 });
 
 export const mapDispatchToProps = dispatch => ({
