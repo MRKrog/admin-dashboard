@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
 
 
 
@@ -31,24 +32,46 @@ const PipelineActions = (props) => {
   
   
   const handleChange = (event) => {
-    console.log("Before", asset_stage, asset_completion_timestamp, asset_hash)
+    // console.log("Before", asset_stage, asset_completion_timestamp, asset_hash)
     setAsset_completion_timestamp(event.target.value)
     setAsset_stage(event.target.value)
     setAsset_hash(event.target.value)
     // setState({ ...state, [name]: value });
   };
 
-  const handleSubmit = async () => {
-    console.log("Hello pipe", asset_stage)
+  const handleSubmit = () => {
+    try {
+      let updateData = {
+        asset_completion_timestamp : asset_completion_timestamp,
+        asset_stage : asset_stage,
+        asset_hash : asset_hash,
+        status : "BigData"
+      }
+      console.log(updateData)
+
+    } catch(e) {
+      console.log("Hey that post didnt work/", e);
+    }
   }
 
   // console.log(asset_hash)
-  console.log("Outside after re-render", asset_stage)
+  
   // console.log(asset_completion_timestamp)
   return(
     <div className="PipelineActions" >
+      <div className="PipelineForm">
       <section>
-
+        <TextField
+              id="standard-basic"
+              variant="outlined"
+              label="ETA / Notes"
+              margin="dense"
+              type="text"
+              name="asset_completion_timestamp"
+              className='User-Field'
+              value={asset_completion_timestamp}
+              onChange={handleChange}
+              />
       </section>
       <section>
         <FormControl className={classes.formControl}>
@@ -69,10 +92,21 @@ const PipelineActions = (props) => {
         </FormControl>
       </section>
       <section>
-
+        <TextField
+                id="standard-basic"
+                variant="outlined"
+                label="Hash"
+                margin="dense"
+                type="text"
+                name="asset_hash"
+                className='User-Field'
+                value={asset_hash}
+                onChange={handleChange}
+                />
       </section>
       <div className="submit-button">
         <Button type="submit" variant="contained" onClick={handleSubmit}>Set Stage</Button>
+      </div>
       </div>
     </div>
   )
