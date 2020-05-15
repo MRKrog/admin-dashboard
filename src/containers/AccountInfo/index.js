@@ -39,7 +39,10 @@ const AccountInfo = (props) => {
     fetchUser();
   }, []);
 
-console.log(user);
+  const closeDrawer = () => {
+    console.log('closing drawer')
+  }
+
   return (
     <div className="AccountInfo">
       <Drawer anchor={'bottom'} open={props.state['accountInfoDrawer']} onClose={props.toggleDrawer('accountInfoDrawer', false)}>
@@ -53,10 +56,10 @@ console.log(user);
               </button>
             </Grid>
             <Grid item xs={12} md={6}>
-              <InfoContainer toggleDrawer={props.toggleDrawer} {...user} />
+              <InfoContainer closeDrawer={closeDrawer} {...user} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <CreditContainer toggleDrawer={props.toggleDrawer} {...user} />
+              <CreditContainer {...user} />
             </Grid>
           </Grid> }
         </div>

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from "react-redux";
-import * as actions from "../../../redux/actions";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -102,13 +100,4 @@ class UserAggregate extends Component {
   }
 }
 
-
-const mapStateToProps = () => ({
-
-})
-
-const mapDispatchToProps = () => ({
-
-})
-
-export default connect(mapStateToProps, mapDispatchToProps) (UserAggregate);
+export default UserAggregate;

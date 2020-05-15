@@ -16,7 +16,7 @@ const columns = [
   { id: 'product_title', label: 'Title', minWidth: 115 },
   { id: 'asset_created_timestamp', label: 'Requested', minWidth: 75 },
   { id: 'asset_stage', label: 'Stage', minWidth: 100 },
-  { id: 'preview', label: 'Preview', minWidth: 50 },
+  { id: 'preview', label: '', minWidth: 50 },
 ];
 
 const useStyles = makeStyles({
@@ -67,7 +67,7 @@ console.log(props.pipeline)
                     {moment(row._source.asset_created_timestamp).format("MM-DD-YYYY")}
                   </TableCell>
                   <TableCell align='left'>
-                    <PipelineActions {...props.pipeline}/>
+                    <PipelineActions {...row._source}/>
                   </TableCell>
                   <TableCell align='left'>
                     preview

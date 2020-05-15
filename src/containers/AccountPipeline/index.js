@@ -38,13 +38,12 @@ const AccountPipeline = (props) => {
     fetchPipeline();
   }, []);
 
-console.log(pipeline);
   return (
     <div className="AccountInfo">
       <Drawer anchor={'bottom'} open={props.state['accountPipelineDrawer']} onClose={props.toggleDrawer('accountPipelineDrawer', false)}>
         <div className={classes.fullList} role="presentation">
-
-        { Object.keys(pipeline).length > 0 &&
+        {
+          Object.keys(pipeline).length > 0 &&
           <Grid container spacing={3}>
             <Grid item xs={12} className={classes.accountHeader}>
               <div><b>Account Pipeline: </b></div>
@@ -55,8 +54,8 @@ console.log(pipeline);
             <Grid item xs={12}>
               <PipelineTable pipeline={pipeline}/>
             </Grid>
-          </Grid> } 
-
+          </Grid>
+        }
         </div>
       </Drawer>
     </div>

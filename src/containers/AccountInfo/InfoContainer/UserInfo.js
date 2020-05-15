@@ -65,6 +65,7 @@ class UserInfo extends Component {
 		} catch(e) {
 			console.log("There was an error updating user info", e)
 		}
+		this.props.closeDrawer();
 		this.props.setPageLoading(false);
 	}
 
@@ -199,9 +200,4 @@ export const mapDispatchToProps = dispatch => ({
 	setUserAccountUpdate: data => dispatch(actions.setUserAccountUpdate(data))
 });
 
-
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
-
-// this.props.toggleDrawer('accountInfoDrawer', false)

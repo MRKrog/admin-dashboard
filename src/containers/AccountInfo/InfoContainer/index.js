@@ -1,25 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import UserAggregate from './UserAggregate';
 import UserInfo from './UserInfo';
 
-class AdminInfoContainer extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-		}
-	}
-
-	render() {
-		return (
-			<div className="AdminInfoContainer">
-				<UserAggregate userTransactions={this.props.userTransactions}
-											 productCount={this.props.productCount}
-											 variantCount={this.props.variantCount}
-				/>
-				<UserInfo toggleDrawer={this.props.toggleDrawer} userInfo={this.props.userInfo} />
-			</div>
-		)
-	}
+const AdminInfoContainer = (props) => {
+	return (
+		<div className="AdminInfoContainer">
+			<UserAggregate userTransactions={props.userTransactions}
+										 productCount={props.productCount}
+										 variantCount={props.variantCount}
+			/>
+			<UserInfo closeDrawer={props.closeDrawer} userInfo={props.userInfo} />
+		</div>
+	)
 }
 
 export default AdminInfoContainer;

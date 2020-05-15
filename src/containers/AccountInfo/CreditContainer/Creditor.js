@@ -43,7 +43,7 @@ const Creditor = (props) => {
       }
 
       let url = `http://localhost:3005/api/v1/createTransaction/${props.id}`;
-      const response = await fetch(url, options);
+      await fetch(url, options);
 
     } catch(e) {
       console.log("Hey that post didnt work/", e);

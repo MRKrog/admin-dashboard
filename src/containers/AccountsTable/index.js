@@ -186,7 +186,7 @@ const AccountsTable = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [search, setSearch] = useState('krog');
+  const [search, setSearch] = useState('');
   const [searchAccounts, setSearchAccounts] = useState([]);
   const [selectColumn, setSelectColumn] = useState('business_name');
   const dispatch = useDispatch();
@@ -219,7 +219,7 @@ const AccountsTable = (props) => {
     try {
       // const url = `http://localhost:3005/api/v1/masterDelete/${id}/${uuid}`
       // const response = await fetch(url, {method: 'DELETE'})
-      // const data = await response.json() 
+      // const data = await response.json()
       dispatch(actions.setUserAccountDelete({ id }));
     } catch(e) {
       console.log(e)
