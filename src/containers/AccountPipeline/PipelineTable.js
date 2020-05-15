@@ -38,7 +38,7 @@ const PipelineTable = (props) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-console.log(props.pipeline)
+
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -67,7 +67,7 @@ console.log(props.pipeline)
                     {moment(row._source.asset_created_timestamp).format("MM-DD-YYYY")}
                   </TableCell>
                   <TableCell align='left'>
-                    <PipelineActions {...row._source}/>
+                    <PipelineActions closeDrawer={props.closeDrawer} {...row._source}/>
                   </TableCell>
                   <TableCell align='left'>
                     preview

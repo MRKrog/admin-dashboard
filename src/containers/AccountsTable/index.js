@@ -24,6 +24,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ExtensionIcon from '@material-ui/icons/Extension';
+import ConfirmDialog from './ConfirmDialog';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -186,9 +187,15 @@ const AccountsTable = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('krog');
   const [searchAccounts, setSearchAccounts] = useState([]);
   const [selectColumn, setSelectColumn] = useState('business_name');
+  const [dialogStatus, setDialogStatus] = useState({
+    status: false,
+    uuid: '',
+    id: ''
+  })
+  
   const dispatch = useDispatch();
 
   const userAccounts = useSelector(state => state.userAccounts);
@@ -214,17 +221,13 @@ const AccountsTable = (props) => {
     setSelectColumn(event.target.value);
   }
 
-  const deleteUser = async (id, uuid) => {
-    dispatch(actions.setPageLoading(true));
-    try {
-      // const url = `http://localhost:3005/api/v1/masterDelete/${id}/${uuid}`
-      // const response = await fetch(url, {method: 'DELETE'})
-      // const data = await response.json()
-      dispatch(actions.setUserAccountDelete({ id }));
-    } catch(e) {
-      console.log(e)
-    }
-    dispatch(actions.setPageLoading(false));
+
+  const deleteUser = (id, uuid) => {
+    setDialogStatus({...dialogStatus, uuid, id, status: true })
+  }
+
+  const handleDialogClose = () => {
+    setDialogStatus({ ...dialogStatus, uuid: '', id: '', status: false })
   }
 
   const handleRequestSort = (event, property) => {
@@ -353,6 +356,7 @@ const AccountsTable = (props) => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+      { dialogStatus.status && <ConfirmDialog {...dialogStatus} handleDialogClose={handleDialogClose} />}
     </div>
   );
 }

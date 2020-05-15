@@ -48,6 +48,7 @@ const Creditor = (props) => {
     } catch(e) {
       console.log("Hey that post didnt work/", e);
     }
+    props.closeDrawer('accountInfoDrawer', false)
   }
 
   return (

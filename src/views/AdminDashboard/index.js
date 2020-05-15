@@ -31,14 +31,18 @@ const AdminDashboard = () => {
     setState({ ...state, [drawer]: open, id, uuid });
   };
 
+  const closeDrawer = (drawer, open) => {
+    setState({ ...state, [drawer]: open });
+  }
+
   return (
     <div className="AdminDashboard">
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <AccountsTable toggleDrawer={toggleDrawer} />
-            { state.accountInfoDrawer && <AccountInfo toggleDrawer={toggleDrawer} state={state} /> }
-            { state.accountPipelineDrawer && <AccountPipeline toggleDrawer={toggleDrawer} state={state} /> }
+            { state.accountInfoDrawer && <AccountInfo toggleDrawer={toggleDrawer} closeDrawer={closeDrawer} state={state} /> }
+            { state.accountPipelineDrawer && <AccountPipeline toggleDrawer={toggleDrawer} closeDrawer={closeDrawer} state={state} /> }
           </Grid>
         </Grid>
       </div>

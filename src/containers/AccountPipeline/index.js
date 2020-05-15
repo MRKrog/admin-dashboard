@@ -52,7 +52,7 @@ const AccountPipeline = (props) => {
               </button>
             </Grid>
             <Grid item xs={12}>
-              <PipelineTable pipeline={pipeline}/>
+              <PipelineTable closeDrawer={props.closeDrawer} pipeline={pipeline}/>
             </Grid>
           </Grid>
         }

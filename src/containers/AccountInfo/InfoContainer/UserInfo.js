@@ -65,7 +65,7 @@ class UserInfo extends Component {
 		} catch(e) {
 			console.log("There was an error updating user info", e)
 		}
-		this.props.closeDrawer();
+		this.props.closeDrawer('accountInfoDrawer', false)
 		this.props.setPageLoading(false);
 	}
 

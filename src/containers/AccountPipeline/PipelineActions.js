@@ -34,7 +34,6 @@ const PipelineActions = (props) => {
   });
 
   useEffect(() => {
-    console.log(props);
    setState({
      asset_completion_timestamp : props.asset_completion_timestamp || '',
      asset_stage: props.asset_stage || '',
@@ -47,18 +46,21 @@ const PipelineActions = (props) => {
     setState({ ...state, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
+
       let updateData = {
         asset_completion_timestamp: state.asset_completion_timestamp,
         asset_stage: state.asset_stage,
         asset_hash: state.asset_hash,
-        status : "BigData"
+        variant_id: props.id
       }
+
       console.log(updateData)
     } catch(e) {
       console.log("Hey that post didnt work/", e);
     }
+    props.closeDrawer('accountPipelineDrawer', false)
   }
 
   return(
@@ -66,7 +68,7 @@ const PipelineActions = (props) => {
       <div className={classes.pipelineForm}>
         <section>
           <TextField
-            id="standard-basic"
+            id={`standard-basic-time-${props.id}`}
             variant="outlined"
             label="ETA / Notes"
             margin="dense"
@@ -79,10 +81,10 @@ const PipelineActions = (props) => {
         </section>
         <section>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Asset Stage</InputLabel>
+            <InputLabel id={`demo-simple-select-label-${props.id}`}>Asset Stage</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                id={`demo-simple-select-${props.id}`}
                 name="asset_stage"
                 value={state.asset_stage}
                 onChange={handleChange}
@@ -97,12 +99,13 @@ const PipelineActions = (props) => {
         </section>
         <section>
           <TextField
-            id="standard-basic"
+            id={`standard-basic-hash-${props.id}`}
             variant="outlined"
             label="Hash"
             margin="dense"
             type="text"
             name="asset_hash"
+            disabled={state.asset_hash.length > 0 ? true : false}
             className={classes.UserField}
             value={state.asset_hash}
             onChange={handleChange}

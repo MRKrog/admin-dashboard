@@ -11,7 +11,7 @@ const AdminCreditContainer = (props) => {
       ) : (
         <div> No Transactions Table </div>
       ) }
-      <Creditor {...props.userInfo} />
+      <Creditor closeDrawer={props.closeDrawer} {...props.userInfo} />
 		</div>
   );
 }

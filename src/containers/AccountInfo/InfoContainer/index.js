@@ -3,6 +3,7 @@ import UserAggregate from './UserAggregate';
 import UserInfo from './UserInfo';
 
 const AdminInfoContainer = (props) => {
+	
 	return (
 		<div className="AdminInfoContainer">
 			<UserAggregate userTransactions={props.userTransactions}
