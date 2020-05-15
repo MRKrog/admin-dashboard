@@ -8,15 +8,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import PipelineActions from './PipelineActions';
 
 import * as moment from 'moment';
 
 const columns = [
   { id: 'product_title', label: 'Title', minWidth: 115 },
   { id: 'asset_created_timestamp', label: 'Requested', minWidth: 75 },
-  { id: 'asset_completion_timestamp', label: 'Status', minWidth: 120 },
   { id: 'asset_stage', label: 'Stage', minWidth: 100 },
-  { id: 'asset_hash', label: 'Hash', minWidth: 100 },
   { id: 'preview', label: 'Preview', minWidth: 50 },
 ];
 
@@ -65,16 +64,10 @@ console.log(props.pipeline)
                     {row._source.product_title}
                   </TableCell>
                   <TableCell align='left'>
-                    {row._source.asset_created_timestamp}
+                    {moment(row._source.asset_created_timestamp).format("MM-DD-YYYY")}
                   </TableCell>
                   <TableCell align='left'>
-                    {row._source.asset_completion_timestamp}
-                  </TableCell>
-                  <TableCell align='left'>
-                    {row._source.asset_stage}
-                  </TableCell>
-                  <TableCell align='left'>
-                    {row._source.asset_hash}
+                    <PipelineActions {...props.pipeline}/>
                   </TableCell>
                   <TableCell align='left'>
                     preview
@@ -99,8 +92,10 @@ console.log(props.pipeline)
 }
 
 export default PipelineTable;
-
-
+/// moment(row._source.asset_created_timestamp).format("MM-DD-YYYY")
+/// asset_hash={row._source.asset_hash}
+// asset_stage={row._source.asset_stage}
+// asset_completion_timestamp={row._source.asset_completion_timestamp}
 // _id: "31685891326045"
 // _index: "product_variant_shopify"
 // _score: 30.501173
