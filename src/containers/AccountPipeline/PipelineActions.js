@@ -32,10 +32,9 @@ const PipelineActions = (props) => {
   
   const handleChange = (event) => {
     console.log("Before", asset_stage, asset_completion_timestamp, asset_hash)
-    const { name, value } = event.target;
-    // setAsset_completion_timestamp(event.target.value)
-    // setAsset_stage(event.target.value)
-    // setAsset_hash(event.target.value)
+    setAsset_completion_timestamp(event.target.value)
+    setAsset_stage(event.target.value)
+    setAsset_hash(event.target.value)
     // setState({ ...state, [name]: value });
   };
 
@@ -43,9 +42,9 @@ const PipelineActions = (props) => {
     console.log("Hello pipe", asset_stage)
   }
 
-  
-  console.log("Outside after re-render", asset_stage, asset_completion_timestamp, asset_hash)
-  
+  // console.log(asset_hash)
+  console.log("Outside after re-render", asset_stage)
+  // console.log(asset_completion_timestamp)
   return(
     <div className="PipelineActions" >
       <section>
@@ -59,7 +58,7 @@ const PipelineActions = (props) => {
               id="demo-simple-select"
               name="asset_stage"
               value={asset_stage}
-              onChange={setAsset_stage(event.target.value)}
+              onChange={handleChange}
             >
               <MenuItem value={1}>Stage 1</MenuItem>
               <MenuItem value={2}>Stage 2</MenuItem>
