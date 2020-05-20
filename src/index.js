@@ -28,4 +28,4 @@ const router = (
 )
 
 ReactDOM.render(router, document.getElementById('root'));
-serviceWorker.unregister();
+// serviceWorker.unregister();

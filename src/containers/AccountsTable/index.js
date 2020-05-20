@@ -308,7 +308,7 @@ const AccountsTable = (props) => {
                       <TableCell className={classes.hideCopy} align="left">
                         <a href={`http://${user.website_url}`} target="_blank" rel="noopener noreferrer">{user.website_url}</a>
                       </TableCell>
-                      <TableCell align="left">{moment(user.created_at).format("MM-DD-YYYY")}</TableCell>
+                      <TableCell align="left">{moment(user.created_at).format("MMMM Do YYYY, h:mm a")}</TableCell>
                       <TableCell align="center">{user.setup_wizard_state}</TableCell>
                       <TableCell align="left" className={classes.accountBtn}>
                         <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import * as actions from "./redux/actions";
 import AdminDashboard from './views/AdminDashboard';
-// import PageLoader from './components/PageLoader';
 import SimpleBackdrop from "./components/Backdrop/SimpleBackdrop";
 
 class App extends Component {
