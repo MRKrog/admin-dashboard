@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 132,
+    '& > label + .MuiInput-formControl': {
+      marginTop: '13px',
+    }
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -22,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   UserField: {
 
-  }
+  },
 }));
 
 const PipelineActions = (props) => {
@@ -82,19 +85,19 @@ const PipelineActions = (props) => {
         <section>
           <FormControl className={classes.formControl}>
             <InputLabel id={`demo-simple-select-label-${props.id}`}>Asset Stage</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id={`demo-simple-select-${props.id}`}
-                name="asset_stage"
-                value={state.asset_stage}
-                onChange={handleChange}
-              >
-                <MenuItem value={1}>Stage 1</MenuItem>
-                <MenuItem value={2}>Stage 2</MenuItem>
-                <MenuItem value={3}>Stage 3</MenuItem>
-                <MenuItem value={4}>Stage 4</MenuItem>
-                <MenuItem value={5}>Stage 5</MenuItem>
-              </Select>
+            <Select
+              labelId="demo-simple-select-label"
+              id={`demo-simple-select-${props.id}`}
+              name="asset_stage"
+              value={state.asset_stage}
+              onChange={handleChange}
+            >
+              <MenuItem value={1}>Stage 1</MenuItem>
+              <MenuItem value={2}>Stage 2</MenuItem>
+              <MenuItem value={3}>Stage 3</MenuItem>
+              <MenuItem value={4}>Stage 4</MenuItem>
+              <MenuItem value={5}>Stage 5</MenuItem>
+            </Select>
           </FormControl>
         </section>
         <section>

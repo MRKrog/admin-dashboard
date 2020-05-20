@@ -1,4 +1,83 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald:300,400|Roboto+Condensed|Roboto:300,400');
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@100;200;300;600;900&display=swap');
+
+
+
+$fontOverpass: 'Overpass', sans-serif;
+
+
+
+// ------------------------------------ Colors -----------------------------------
+
+// sidebar colors
+$sidebarBaseColor: #2d2d2d;
+$sidebarAccentColor: #4c4c4c;
+
+// main colors
+$mainColor: #dee9ee;
+$progressbarColor: #2196f378;
+
+// button colors
+$wizardBtnColor: #2196F3;
+$levarPurchase: #2196F3;
+$secondaryBtnColor: #66767d;
+$primaryBtnColor: #61badf;
+
+// font colors
+$fontColorWhite: #fff;
+$fontColorBlack: #4f4f4f;
+$levarWhite: #fff;
+
+// table colors
+$tableHeader: #66767d;
+
+
+p {
+  font-family: $fontOverpass;
+  color: #6f6f6f;
+  margin: 0;
+  font-weight: 300;
+}
+
+
+@mixin levarButton {
+  display: flex;
+  cursor: pointer;
+  font-family: $fontOverpass;
+  width: 100%;
+  background: $levarPurchase;
+  color: $levarWhite;
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  min-width: 64px;
+  line-height: 1.75;
+  border-radius: 4px;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  text-decoration: none;
+  justify-content: center;
+  border: none;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $fontOverpass;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+
 
 @import './App';
 
@@ -10,22 +89,3 @@
 
 /* #### components #### */
 @import './components/Loading/Loading';
-
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
