@@ -14,6 +14,8 @@ class UserAggregate extends Component {
 			creditsUsed: '',
 			userProducts: '',
 			userVariants: '',
+			subscriptionStatus: [],
+			liveAssets: '',
 			recentTransactions: []
     }
   }
@@ -22,11 +24,30 @@ class UserAggregate extends Component {
 		this.setState({
 			creditsOnHand: this.creditsAvailable(this.props.userTransactions),
 			creditsUsed: this.creditsUsed(this.props.userTransactions),
+			subscriptionStatus: this.subStatus(this.props.userTransactions),
 			userProducts: this.props.productCount ||  'N/A',
 			userVariants: this.props.variantCount ||  'N/A',
+			liveAssets: null,
 			recentTransactions: this.props.userTransactions.length,
 		})
 	}
+
+	subStatus = (transactions) => {
+		
+			let activeSub = transactions.find(t => {
+				if (t.transaction_type === 'subscription' && t.status === 'active'){
+					return t
+			}
+		})
+		if(activeSub){
+			console.log('active sub status & plan', activeSub.status, activeSub.credit_amount);
+			return activeSub
+		} else {
+			return "N"
+		}
+	}
+
+
 
   creditsAvailable = (transactions) => {
 		let sumTrans = 0;
@@ -59,7 +80,7 @@ class UserAggregate extends Component {
 				<div className="AdminCredits">
 					<TableContainer component={Paper}>
 						<Table aria-label="custom pagination table">
-							<TableBody>
+							<TableBody>					
 									<TableRow>
 										<TableCell component="th" scope="row">
 											Credits on hand:
@@ -67,8 +88,6 @@ class UserAggregate extends Component {
 										<TableCell style={{ width: 160 }} align="left">
 											{this.state.creditsOnHand}
 										</TableCell>
-									</TableRow>
-									<TableRow>
 										<TableCell component="th" scope="row">
 										Credits used:
 										</TableCell>
@@ -76,6 +95,7 @@ class UserAggregate extends Component {
 											{this.state.creditsUsed}
 										</TableCell>
 									</TableRow>
+
 									<TableRow>
 										<TableCell component="th" scope="row">
 										User products in ES:
@@ -83,8 +103,6 @@ class UserAggregate extends Component {
 										<TableCell style={{ width: 160 }} align="left">
 											{this.state.userProducts}
 										</TableCell>
-									</TableRow>
-									<TableRow>
 										<TableCell component="th" scope="row">
 										User variants in ES:
 										</TableCell>
@@ -92,6 +110,43 @@ class UserAggregate extends Component {
 											{this.state.userVariants}
 										</TableCell>
 									</TableRow>
+									<TableRow>
+										<TableCell component="th" scope="row">
+											Subcription Status:
+										</TableCell>
+										<TableCell style={{ width: 160 }} align="left">
+											 {(!this.state.subscriptionStatus.status) ? (
+												 "N/A"
+											 ) : (
+												this.state.subscriptionStatus.status
+											 )}
+										</TableCell>
+										<TableCell component="th" scope="row">
+											Subcription Plan:
+										</TableCell>
+										<TableCell style={{ width: 160 }} align="left">
+											 {(!this.state.subscriptionStatus.credit_amount) ? (
+												 "N/A" 
+											 ) : (
+												this.state.subscriptionStatus.credit_amount + " asset"
+											 )} 
+										</TableCell>
+									</TableRow>
+									
+									<TableRow>
+										<TableCell component="th" scope="row">
+											Live Assets:
+										</TableCell>
+										<TableCell style={{ width: 160 }} align="left">
+											 {(!this.state.liveAssets) ? (
+												 "N/A"
+											 ) : (
+												 this.state.liveAssets
+											 )}
+										</TableCell>
+									
+									</TableRow>
+
 								</TableBody>
 						</Table>
 					</TableContainer>
