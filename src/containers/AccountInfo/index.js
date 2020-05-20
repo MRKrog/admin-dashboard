@@ -18,6 +18,11 @@ const useStyles = makeStyles({
     alignItems: 'center',
     borderBottom: 'solid 1px #cccccc',
     marginBottom: '1em',
+  },
+  infoExtra: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flex: '1',
   }
 });
 
@@ -38,7 +43,7 @@ const AccountInfo = (props) => {
   useEffect(() => {
     fetchUser();
   }, []);
-  // user_shopify_url
+
   return (
     <div className="AccountInfo">
       <Drawer anchor={'bottom'} open={props.state['accountInfoDrawer']} onClose={props.toggleDrawer('accountInfoDrawer', false)}>
@@ -46,9 +51,10 @@ const AccountInfo = (props) => {
         { Object.keys(user).length > 0 &&
           <Grid container spacing={3}>
             <Grid item xs={12} className={classes.accountHeader}>
-              <div>
-                <b>Account Info:</b> <a href={`mailto:${user.userInfo.email}`}>{user.userInfo.email}</a> || 
-                <b>Store URL:</b> <a href={`${user.userInfo.user_shopify_url}`} target="_blank">{user.userInfo.user_shopify_url}</a>
+              <div className={classes.infoExtra}>
+                <span><b>Account Info:</b> <a href={`mailto:${user.userInfo.email}`}>{user.userInfo.email}</a></span>
+                <span><b>Store URL:</b> <a href={`http://${user.userInfo.user_shopify_url}`} target="_blank">{user.userInfo.user_shopify_url}</a></span>
+                <span><b>UUID:</b> {user.userInfo.uuid}</span>
               </div>
               <button className="AdminCloseBtn" onClick={props.toggleDrawer('accountInfoDrawer', false)}>
                 <i className="fas fa-times-circle"></i>

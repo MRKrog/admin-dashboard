@@ -20,11 +20,11 @@ const store = createStore(
 )
 
 const router = (
-  <Provider store={store}>
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
-  </Provider>
+    <Provider store={store}>
+      <BrowserRouter>
+          <App />
+      </BrowserRouter>
+    </Provider>
 )
 
 ReactDOM.render(router, document.getElementById('root'));

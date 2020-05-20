@@ -46,7 +46,7 @@ const AccountPipeline = (props) => {
           Object.keys(pipeline).length > 0 &&
           <Grid container spacing={3}>
             <Grid item xs={12} className={classes.accountHeader}>
-              <div><b>Account Pipeline: </b></div>
+              <div><b>Account Pipeline</b></div>
               <button className="AdminCloseBtn" onClick={props.toggleDrawer('accountPipelineDrawer', false)}>
                 <i className="fas fa-times-circle"></i>
               </button>

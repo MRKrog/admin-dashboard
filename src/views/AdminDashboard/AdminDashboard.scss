@@ -6,6 +6,10 @@
   color: white;
 }
 
+a {
+  text-decoration: none;
+}
+
 .AdminInfoContainer {
   display: flex;
   flex-direction: column;
@@ -70,4 +74,12 @@
   font-size: 20px;
   cursor: pointer;
   outline: none;
+  margin-left: 1em;
+}
+
+
+.submit-button {
+  button {
+    @include levarButton;
+  }
 }

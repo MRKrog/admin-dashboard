@@ -4,6 +4,15 @@ import * as actions from "./redux/actions";
 import AdminDashboard from './views/AdminDashboard';
 import SimpleBackdrop from "./components/Backdrop/SimpleBackdrop";
 
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+
+const levarTheme = createMuiTheme({
+   typography: {
+    fontFamily: `"Overpass", "Helvetica", "Arial", sans-serif`,
+   }
+});
+
 class App extends Component {
   constructor(){
     super();
@@ -25,7 +34,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-Content">
-          <AdminDashboard />
+          <ThemeProvider theme={levarTheme}>
+            <AdminDashboard />
+          </ThemeProvider>
         </div>
         { this.props.pageLoading && <SimpleBackdrop /> }
       </div>

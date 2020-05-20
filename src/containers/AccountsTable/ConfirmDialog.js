@@ -14,8 +14,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-
-/// { dialogStatus.status && <ConfirmDialog {...dialogStatus} handleDialogClose={handleDialogClose} />}
 const ConfirmDialog = (props) => {
 
   const dispatch = useDispatch();
@@ -24,9 +22,7 @@ const ConfirmDialog = (props) => {
 
     dispatch(actions.setPageLoading(true));
     try {
-      
       const url = `http://localhost:3005/api/v1/masterDelete/${props.id}/${props.uuid}`
-      console.log(url)
       const response = await fetch(url, {method: 'DELETE'})
       const data = await response.json()
       console.log("It Worked", data)
